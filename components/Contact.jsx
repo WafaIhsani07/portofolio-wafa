@@ -11,17 +11,36 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const recipientEmail = "wafaihsani0710@gmail.com";
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
+    setStatusMessage("");
 
-    const subject = encodeURIComponent(`Pesan portofolio dari ${name || "pengunjung"}`);
-    const body = encodeURIComponent(
-      [`Nama: ${name || "-"}`, `Email: ${email || "-"}`, "", `Pesan:`, message || "-"].join("\n")
-    );
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
 
-    window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Gagal mengirim pesan");
+      }
+
+      setStatusMessage("Pesan berhasil dikirim.");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      setStatusMessage(error instanceof Error ? error.message : "Terjadi kesalahan saat mengirim pesan.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,10 +90,11 @@ export default function Contact() {
             value={message}
             onChange={(event) => setMessage(event.target.value)}
           />
-          <button type="submit" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A]">
-            Kirim Pesan <Send size={16} />
+          <button type="submit" disabled={isSubmitting} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A] disabled:cursor-not-allowed disabled:opacity-70">
+            {isSubmitting ? "Mengirim..." : <><span>Kirim Pesan</span> <Send size={16} /></>}
           </button>
-          <p className="mt-3 text-xs text-white/55">Tombol ini akan membuka aplikasi email agar pesan langsung terkirim ke alamat saya.</p>
+          <p className="mt-3 text-xs text-white/55">Pesan akan dikirim langsung ke email saya tanpa membuka Gmail.</p>
+          {statusMessage ? <p className="mt-3 text-sm font-semibold text-[#E7C76A]">{statusMessage}</p> : null}
         </form>
       </div>
     </section>

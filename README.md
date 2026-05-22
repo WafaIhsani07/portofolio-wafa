@@ -37,3 +37,18 @@ Cara paling mudah adalah pakai Vercel:
 4. Pilih repo ini, lalu klik **Deploy**.
 
 Setelah selesai, Vercel akan kasih link publik yang bisa dibuka siapa saja.
+
+## Kontak Email
+
+Form kontak mengirim pesan langsung lewat API route Next.js dan SMTP, jadi tidak perlu membuka Gmail.
+
+Isi environment variables berikut di Vercel atau file `.env.local`:
+
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_USER`
+- `SMTP_PASS`
+
+`CONTACT_TO_EMAIL` sudah default ke `wafaihsani0710@gmail.com`, jadi biasanya tidak perlu diisi.
+
+Contoh format bisa dilihat di [.env.example](.env.example).
