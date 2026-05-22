@@ -40,15 +40,6 @@ Setelah selesai, Vercel akan kasih link publik yang bisa dibuka siapa saja.
 
 ## Kontak Email
 
-Form kontak mengirim pesan langsung lewat API route Next.js dan SMTP, jadi tidak perlu membuka Gmail.
+Form kontak memakai layanan form sederhana, jadi tidak perlu backend, SMTP, atau App Password.
 
-Isi environment variables berikut di Vercel atau file `.env.local`:
-
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_USER`
-- `SMTP_PASS`
-
-`CONTACT_TO_EMAIL` sudah default ke `wafaihsani0710@gmail.com`, jadi biasanya tidak perlu diisi.
-
-Contoh format bisa dilihat di [.env.example](.env.example).
+Kalau nanti ingin pindah ke backend sendiri, baru tambahkan API route lagi.

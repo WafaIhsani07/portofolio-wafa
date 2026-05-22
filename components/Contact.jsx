@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Mail, Github, Linkedin, Send } from "lucide-react";
 
 function SectionLabel({ children }) {
@@ -8,41 +7,6 @@ function SectionLabel({ children }) {
 }
 
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setStatusMessage("");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Gagal mengirim pesan");
-      }
-
-      setStatusMessage("Pesan berhasil dikirim.");
-      setName("");
-      setEmail("");
-      setMessage("");
-    } catch (error) {
-      setStatusMessage(error instanceof Error ? error.message : "Terjadi kesalahan saat mengirim pesan.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <section id="kontak" className="bg-navy px-6 py-16 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -68,33 +32,35 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="rounded-[2rem] border border-white/10 bg-white/10 p-6 backdrop-blur" onSubmit={handleSubmit}>
+        <form className="rounded-[2rem] border border-white/10 bg-white/10 p-6 backdrop-blur" action="https://formsubmit.co/wafaihsani0710@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Pesan masuk dari portofolio" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="box" />
           <div className="grid gap-4 md:grid-cols-2">
             <input
               className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
               placeholder="Nama Lengkap"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
+              name="name"
+              required
             />
             <input
               className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
               placeholder="Email"
               type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              name="email"
+              required
             />
           </div>
           <textarea
             className="mt-4 h-36 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
             placeholder="Pesan"
-            value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            name="message"
+            required
           />
-          <button type="submit" disabled={isSubmitting} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A] disabled:cursor-not-allowed disabled:opacity-70">
-            {isSubmitting ? "Mengirim..." : <><span>Kirim Pesan</span> <Send size={16} /></>}
+          <button type="submit" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A]">
+            Kirim Pesan <Send size={16} />
           </button>
-          <p className="mt-3 text-xs text-white/55">Pesan akan dikirim langsung ke email saya tanpa membuka Gmail.</p>
-          {statusMessage ? <p className="mt-3 text-sm font-semibold text-[#E7C76A]">{statusMessage}</p> : null}
+          <p className="mt-3 text-xs text-white/55">Pesan akan langsung terkirim ke email saya tanpa membuka Gmail.</p>
         </form>
       </div>
     </section>
