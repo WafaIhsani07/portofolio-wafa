@@ -4,6 +4,22 @@
 
 :root {
   color-scheme: light;
+  --page-bg: #f8f5ed;
+  --page-text: #172033;
+  --surface: rgba(255, 255, 255, 0.8);
+  --surface-soft: rgba(255, 255, 255, 0.55);
+  --navy: #0f1b2d;
+  --gold: #c9a24d;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #0b1220;
+  --page-text: #f4f0e8;
+  --surface: rgba(17, 25, 40, 0.88);
+  --surface-soft: rgba(17, 25, 40, 0.68);
+  --navy: #f4f0e8;
+  --gold: #e3be63;
 }
 
 html,
@@ -15,8 +31,9 @@ body {
 
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
-  background: #f8f5ed;
-  color: #172033;
+  background: var(--page-bg);
+  color: var(--page-text);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 * {
@@ -31,4 +48,54 @@ body {
   background-image: linear-gradient(rgba(15, 27, 45, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 27, 45, 0.04) 1px, transparent 1px);
   background-size: 46px 46px;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent 85%);
+}
+
+html[data-theme="dark"] .bg-cream {
+  background: var(--page-bg) !important;
+}
+
+html[data-theme="dark"] .bg-navy {
+  background: #111a2a !important;
+  color: var(--page-text) !important;
+}
+
+html[data-theme="dark"] .text-navy {
+  color: var(--page-text) !important;
+}
+
+html[data-theme="dark"] .text-gold {
+  color: var(--gold) !important;
+}
+
+html[data-theme="dark"] .text-white {
+  color: var(--page-text) !important;
+}
+
+html[data-theme="dark"] .text-slate-600,
+html[data-theme="dark"] .text-slate-700,
+html[data-theme="dark"] .text-slate-500 {
+  color: rgba(244, 240, 232, 0.72) !important;
+}
+
+html[data-theme="dark"] .border-white\/40,
+html[data-theme="dark"] .border-white\/10,
+html[data-theme="dark"] .border-white\/70 {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html[data-theme="dark"] .bg-white,
+html[data-theme="dark"] .bg-white\/70,
+html[data-theme="dark"] .bg-white\/75,
+html[data-theme="dark"] .bg-white\/80,
+html[data-theme="dark"] .bg-white\/85,
+html[data-theme="dark"] .bg-white\/10,
+html[data-theme="dark"] .bg-white\/15 {
+  background-color: var(--surface) !important;
+}
+
+html[data-theme="dark"] .shadow-soft,
+html[data-theme="dark"] .shadow-xl,
+html[data-theme="dark"] .shadow-2xl,
+html[data-theme="dark"] .shadow-sm {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28) !important;
 }

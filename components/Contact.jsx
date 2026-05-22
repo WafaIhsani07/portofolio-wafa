@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Mail, Github, Linkedin, Send } from "lucide-react";
 
 function SectionLabel({ children }) {
@@ -5,6 +8,22 @@ function SectionLabel({ children }) {
 }
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const recipientEmail = "wafaihsani0710@gmail.com";
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const subject = encodeURIComponent(`Pesan portofolio dari ${name || "pengunjung"}`);
+    const body = encodeURIComponent(
+      [`Nama: ${name || "-"}`, `Email: ${email || "-"}`, "", `Pesan:`, message || "-"].join("\n")
+    );
+
+    window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <section id="kontak" className="bg-navy px-6 py-16 text-white">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
@@ -30,15 +49,32 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="rounded-[2rem] border border-white/10 bg-white/10 p-6 backdrop-blur">
+        <form className="rounded-[2rem] border border-white/10 bg-white/10 p-6 backdrop-blur" onSubmit={handleSubmit}>
           <div className="grid gap-4 md:grid-cols-2">
-            <input className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45" placeholder="Nama Lengkap" />
-            <input className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45" placeholder="Email" />
+            <input
+              className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
+              placeholder="Nama Lengkap"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+            <input
+              className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
           </div>
-          <textarea className="mt-4 h-36 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45" placeholder="Pesan" />
-          <button type="button" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A]">
+          <textarea
+            className="mt-4 h-36 w-full rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
+            placeholder="Pesan"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
+          <button type="submit" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gold px-6 py-4 text-sm font-black text-white transition hover:bg-[#E7C76A]">
             Kirim Pesan <Send size={16} />
           </button>
+          <p className="mt-3 text-xs text-white/55">Tombol ini akan membuka aplikasi email agar pesan langsung terkirim ke alamat saya.</p>
         </form>
       </div>
     </section>
