@@ -36,6 +36,7 @@ export default function Contact() {
           <input type="hidden" name="_subject" value="Pesan masuk dari portofolio" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="box" />
+          <input type="hidden" name="_next" value="https://portofolio-wafa-one.vercel.app/terkirim" />
           <div className="grid gap-4 md:grid-cols-2">
             <input
               className="rounded-2xl border border-white/10 bg-white/10 px-5 py-4 text-sm outline-none placeholder:text-white/45"
